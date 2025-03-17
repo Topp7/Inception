@@ -5,62 +5,40 @@
 #                                                     +:+ +:+         +:+      #
 #    By: stopp <stopp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/10/13 17:55:12 by stopp             #+#    #+#              #
-#    Updated: 2025/03/06 18:00:39 by stopp            ###   ########.fr        #
+#    Created: 2025/03/17 17:28:32 by stopp             #+#    #+#              #
+#    Updated: 2025/03/17 17:57:06 by stopp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Project name
-NAME := PmergeMe
+NAME = Inception
+COMPOSE_FILE = src/docker-compose.yml
+ENV_FILE = src/.env
+VOLUME = /Users/stopp/Desktop/Inception
+COMPOSE = docker compose -p $(NAME) -f $(COMPOSE_FILE)
 
-# Define ANSI color codes
 GREEN := \033[0;32m
 RED := \033[0;31m
 BLUE := \033[0;34m
 NC := \033[0m
 
-# Compiler + Flags
-CC := c++
-CFLAGS := -Wall -Wextra -Werror -std=c++17
+all: up
 
-# Directories and Files
-OBJDIR := obj
-SRC :=	src/main.cpp \
-		src/PmergeMe.cpp \
-		src/Jacobsthal.cpp \
+up: build
+		@echo "$(GREEN)Building and starting Container.$(NC)"
+		@$(COMPOSE) --env-file $(ENV_FILE) up -d
 
-OBJ := $(SRC:%.cpp=$(OBJDIR)/%.o)
+build:
+		@mkdir -p /home/stopp/data/mariadb
+		@mkdir -p /home/stopp/data/wordpress
+		@$(COMPOSE) --env-file $(ENV_FILE) build -no-cache
 
+stop:
+		@@echo "$(RED)Stopping Container!$(NC)"
+		@$(COMPOSE) stop
 
-MESSAGE := "\n$(GREEN)$(NAME) built successfully!$(NC)\n"
+down:
+		@echo "$(RED)Stopping and removing Containers!$(NC)"
+		@$(COMPOSE) down
 
-# Project build rule
-all: $(OBJDIR) $(NAME)
-	@echo $(MESSAGE)
-
-$(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $@
-
-# Rule to compile source files into object files in a separate obj folder
-$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
-	@mkdir -p $(dir $@)
-	@echo Compiling: $<
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-# Create the objects directory
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
-
-# Rule to clean object files
-clean:
-	@rm -rf $(OBJDIR)
-
-# Rule to clean project and object files
-fclean: clean
-	@rm -f $(NAME)
-
-# Rule to clean and rebuild the project
-re: fclean all
-
-# Phony targets
-.PHONY: all clean fclean re Makefile
+clean:	down
+		@echo "$(RED)"
