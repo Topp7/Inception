@@ -12,7 +12,7 @@ fi
 
 mkdir -p /run/php
 chown -R www-data:www-data /run/php
-chown -R 755 /run/php
+chmod -R 755 /run/php
 
 if ! /usr/sbin/php-fpm7.4 --version; then
 	echo "PHP-FPM not found.. exiting!"
@@ -23,7 +23,7 @@ cd $WP_PATH
 
 if [ ! -f wp-config.php ]; then
 	echo "creating config.php"
-	wp config create
+	wp config create \
 			--dbname=$DB_NAME \
 			--dbuser=$DB_USER \
 			--dbpass=$DB_USER_PW \

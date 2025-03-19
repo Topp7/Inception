@@ -5,7 +5,7 @@ mkdir -p /run/mysql
 chown -R mysql:mysql /run/mysql
 
 # MariaDB data
-if [ ! -d "var/lib/mysql/mysql" ]; then
+if [ ! -d "/var/lib/mysql/mysql" ]; then
 	echo -e "Starting Database!"
 	mysqld --initialize --user=mysql --datadir=/var/lib/mysql
 fi
@@ -20,8 +20,7 @@ done
 echo -e "MariaDB started!"
 
 #Changing PW
-TEMP_PASS=$(grep 'temporary password' "/var/log/mysql/error.log" | awk '{print $NF}')
-mysql -u root -p"${TEMP_PASS}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PW}';"
+mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PW}';"
 
 #DataBase check
 DATABASE=$(mysql -u root -p${DB_ROOT_PW} -e "SHOW DATABASES LIKE '${DB_NAME}';" | grep "${DB_NAME}")
