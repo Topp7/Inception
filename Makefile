@@ -6,7 +6,7 @@
 #    By: stopp <stopp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 17:28:32 by stopp             #+#    #+#              #
-#    Updated: 2025/03/19 17:38:30 by stopp            ###   ########.fr        #
+#    Updated: 2025/03/19 17:48:25 by stopp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ up: build
 build:
 	@mkdir -p /home/stopp/data/mariadb
 	@mkdir -p /home/stopp/data/wordpress
-	@$(COMPOSE) --env-file $(ENV_FILE) build -no-cache
+	@$(COMPOSE) --env-file $(ENV_FILE) build --no-cache
 
 stop:
 	@@echo "$(RED)Stopping Container!$(NC)"
