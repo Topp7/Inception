@@ -6,11 +6,11 @@
 #    By: stopp <stopp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 17:28:32 by stopp             #+#    #+#              #
-#    Updated: 2025/03/19 17:48:25 by stopp            ###   ########.fr        #
+#    Updated: 2025/03/19 17:53:12 by stopp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Inception
+NAME = inception
 COMPOSE_FILE = src/docker-compose.yml
 ENV_FILE = src/.env
 COMPOSE = docker compose -p $(NAME) -f $(COMPOSE_FILE)

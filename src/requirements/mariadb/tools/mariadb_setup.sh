@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 # Creating a directory for mariadb
 mkdir -p /run/mysql

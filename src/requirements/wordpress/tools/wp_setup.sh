@@ -5,8 +5,8 @@ WP_PATH="/var/www/html/$DOMAIN_NAME/public_html"
 if ! [ -d "$WP_PATH" ]; then
 		echo "Download WordPress files to the Path"
 		mkdir -p "$WP_PATH"
-		chown -R www-data:www-data /var/www/html/$DOMAIN_NAME/public_html
-		chmod -R 755 /var/www/html/$DOMAIN_NAME/public_html
+		chown -R www-data:www-data /var/www/html
+		chmod -R 755 /var/www/html
 		wp core download --path="$WP_PATH" --allow-root
 fi
 
